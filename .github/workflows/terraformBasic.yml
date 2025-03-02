@@ -24,11 +24,12 @@ jobs:
       
       - name: Initialize Terraform
         run: terraform init
-        working-directory: Basics/EC2
+        working-directory: Basic/EC2
       
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-        working-directory: Basics/EC2
+        working-directory: Basic/EC2
       
       - name: Apply Terraform
         run: terraform apply -auto-approve
+        working-directory: Basic/EC2
