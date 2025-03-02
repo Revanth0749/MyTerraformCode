@@ -45,7 +45,7 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: Basic/EC2
       
-      - neme: Terraform destroy
+      - name: Terraform destroy
         if: ${{github.event.inputs.action == 'destroy'}}
         run: terraform destroy -auto-approve
         working-directory: Basic/EC2
