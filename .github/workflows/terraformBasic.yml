@@ -2,6 +2,15 @@ name: Terraform Simple EC2
 
 on:
   workflow_dispatch:
+    inputs:
+      action:
+        description: "Choose and action provision or destroy"
+        required: true
+        default: "provision"
+        type: choice
+        options:
+          - provision
+          - destroy
 
 jobs:
   terraform:
@@ -27,9 +36,16 @@ jobs:
         working-directory: Basic/EC2
       
       - name: Terraform Plan
+        if: ${{ github.event.inputs.action == 'provision' }}
         run: terraform plan -out=tfplan
         working-directory: Basic/EC2
       
       - name: Apply Terraform
+        if: ${{ github.event.inputs.action == 'provision' }}
         run: terraform apply -auto-approve
+        working-directory: Basic/EC2
+      
+      - neme: Terraform destroy
+        if: ${{github.event.inputs.action == 'destroy'}}
+        run: terraform destroy -auto-approve
         working-directory: Basic/EC2
