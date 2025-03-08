@@ -5,6 +5,12 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+    bucket = "tf-state-bucket-demoenv"
+    key = "terraform/state.tfstate"
+    region = "ap-south-1"
+    encrypt = true
+  }
 }
 
 provider "aws" {
@@ -26,4 +32,3 @@ resource "aws_s3_bucket_versioning" "tf-state-version" {
     status = "Enabled"
   }
 }
-
