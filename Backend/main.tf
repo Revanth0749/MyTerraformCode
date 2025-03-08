@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      version = "~>5.0"
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
     }
   }
 }
@@ -10,6 +10,7 @@ terraform {
 provider "aws" {
   region = "ap-south-1"
 }
+
 
 resource "aws_s3_bucket" "tf-state" {
   bucket = "tf-state-bucket-DemoEnv"
