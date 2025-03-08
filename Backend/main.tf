@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "tf-state" {
   }
 }
 
-resource "aws-aws_s3_bucket_versioning" "tf-state-version" {
+resource "aws_s3_bucket_versioning" "tf-state-version" {
   bucket = aws_s3_bucket.tf-state.id
   versioning_configuration {
     status = "Enabled"
