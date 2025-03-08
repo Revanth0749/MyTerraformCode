@@ -1,0 +1,51 @@
+name: Terraform Simple EC2
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Choose and action provision or destroy"
+        required: true
+        default: "provision"
+        type: choice
+        options:
+          - provision
+          - destroy
+
+jobs:
+  terraform:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID}}
+          aws-region: "ap-south-1"
+      
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: Variables
+      
+      - name: Terraform Plan
+        if: ${{ github.event.inputs.action == 'provision' }}
+        run: terraform plan -out=tfplan
+        working-directory: Variables
+      
+      - name: Apply Terraform
+        if: ${{ github.event.inputs.action == 'provision' }}
+        run: terraform apply -auto-approve -var-file="terraform.tfvars"
+        working-directory: Variables
+      
+      - name: Terraform destroy
+        if: ${{github.event.inputs.action == 'destroy'}}
+        run: terraform destroy -auto-approve
+        working-directory: Variables
