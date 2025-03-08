@@ -13,7 +13,7 @@ provider "aws" {
 
 
 resource "aws_s3_bucket" "tf-state" {
-  bucket = "tf-state-bucket-DemoEnv"
+  bucket = "tf-state-bucket-demoenv"
   tags = {
     Name = "Terraform-state-bucket"
     Environment = "Demo"
